@@ -147,13 +147,16 @@ def generate_pdf_with_gotenberg(html_content: str, pdf_path: str) -> bool:
             'files': ('index.html', html_content, 'text/html')
         }
         
-        # PDF-Optionen
+        # PDF-Optionen: DIN A4 Hochformat ohne Rand
         data = {
-            'marginTop': '1',
-            'marginBottom': '1',
-            'marginLeft': '1',
-            'marginRight': '1',
-            'printBackground': 'true'
+            'paperWidth': '8.27',      # A4 Breite in Inches
+            'paperHeight': '11.69',    # A4 Höhe in Inches
+            'marginTop': '0',
+            'marginBottom': '0',
+            'marginLeft': '0',
+            'marginRight': '0',
+            'printBackground': 'true',
+            'preferCssPageSize': 'false'  # Immer A4 verwenden
         }
         
         response = requests.post(url, files=files, data=data, timeout=30)
