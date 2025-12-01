@@ -1,6 +1,13 @@
+# Docker Compose für GitHub Container Registry Image
+# Verwendung: docker-compose -f docker-compose.ghcr.yml up -d
+#
+# Voraussetzung: Docker Login bei ghcr.io
+# echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+
 services:
   html-to-url:
-    build: .
+    # Ersetze OWNER/REPO mit deinem GitHub Repository (z.B. username/htmltourl)
+    image: ghcr.io/OWNER/REPO:latest
     container_name: html-to-url
     restart: unless-stopped
     ports:
@@ -28,9 +35,6 @@ services:
     image: gotenberg/gotenberg:8
     container_name: gotenberg
     restart: unless-stopped
-    # Gotenberg läuft intern, kein externer Port nötig
-    # ports:
-    #   - "3000:3000"
     environment:
       - GOTENBERG_API_TIMEOUT=60s
     healthcheck:
@@ -42,3 +46,4 @@ services:
 volumes:
   html_data:
     driver: local
+

@@ -281,13 +281,34 @@ pytest tests/ -v
 pytest tests/ -v --cov=app --cov-report=html
 ```
 
-## CI/CD
+## CI/CD & GitHub Packages
 
-Das Projekt enthält eine GitHub Actions Workflow-Datei (`.github/workflows/ci.yml`), die bei jedem Push:
+Das Projekt enthält eine GitHub Actions Workflow-Datei (`.github/workflows/ci.yml`), die bei jedem Push auf `main`:
 
 1. **Tests ausführt** mit pytest
-2. **Docker Image baut** und testet
-3. Optional: **Push zu Docker Hub** (Secrets erforderlich)
+2. **Docker Image baut** 
+3. **Push zu GitHub Container Registry** (ghcr.io)
+
+### Image von GitHub Packages verwenden
+
+```bash
+# Login (einmalig, mit GitHub Personal Access Token)
+echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+
+# Image pullen (ersetze OWNER/REPO mit deinem Repository)
+docker pull ghcr.io/OWNER/REPO:latest
+
+# Mit docker-compose (docker-compose.ghcr.yml)
+docker-compose -f docker-compose.ghcr.yml up -d
+```
+
+### Verfügbare Tags
+
+| Tag | Beschreibung |
+|-----|--------------|
+| `latest` | Neuester Stand von main |
+| `main` | Branch-Name |
+| `abc123f` | Commit-SHA (kurz) |
 
 ## Reverse Proxy (Produktion)
 
