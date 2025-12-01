@@ -6,8 +6,8 @@
 
 services:
   html-to-url:
-    # Ersetze OWNER/REPO mit deinem GitHub Repository (z.B. username/htmltourl)
-    image: ghcr.io/OWNER/REPO:latest
+    # GitHub Container Registry Image (lowercase!)
+    image: ghcr.io/ismailoezcan/htmltourl:latest
     container_name: html-to-url
     restart: unless-stopped
     ports:
