@@ -13,8 +13,12 @@ services:
       - MAX_FILE_AGE=${MAX_FILE_AGE:-86400}
       - MAX_CONTENT_LENGTH=${MAX_CONTENT_LENGTH:-1048576}
       - CLEANUP_INTERVAL=${CLEANUP_INTERVAL:-600}
+      - PDF_ENABLED=${PDF_ENABLED:-true}
+      - GOTENBERG_URL=http://gotenberg:3000
     volumes:
       - html_data:/app/html_files
+    depends_on:
+      - gotenberg
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -22,7 +26,21 @@ services:
       retries: 3
       start_period: 5s
 
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    container_name: gotenberg
+    restart: unless-stopped
+    # Gotenberg läuft intern, kein externer Port nötig
+    # ports:
+    #   - "3000:3000"
+    environment:
+      - GOTENBERG_API_TIMEOUT=60s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
 volumes:
   html_data:
     driver: local
-
