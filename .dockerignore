@@ -1,0 +1,36 @@
+# HTML-Dateien nicht ins Image kopieren
+html_files/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+
+# Dokumentation
+*.md
+LICENSE
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Umgebungsvariablen
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
